@@ -40,7 +40,7 @@ export async function POST(req: NextRequest) {
         },
         data: {
           amount: existingProduct.amount + (quantity * product?.price),
-          quantity: existingProduct.quantity + quantity,
+          quantity: existingProduct.quantity + (quantity),
         },
       });
 
