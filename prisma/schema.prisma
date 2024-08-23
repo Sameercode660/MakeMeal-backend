@@ -21,6 +21,7 @@ model User {
   phoneNumber String
   createdAt   DateTime @default(now())
   Cart        Cart[]
+  Order       Order[]
 }
 
 model Admin {
@@ -60,3 +61,18 @@ model Cart {
   user      User     @relation(fields: [userId], references: [id])
   product   Product  @relation(fields: [productId], references: [productId])
 }
+
+model Order {
+  id     String @id @default(uuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+  items Json
+  totalPrice Int
+  status String @default("preparing")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+}
+
+
