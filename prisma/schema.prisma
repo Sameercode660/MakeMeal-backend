@@ -14,14 +14,15 @@ datasource db {
 }
 
 model User {
-  id          String   @id @default(uuid())
+  id          String      @id @default(uuid())
   name        String
-  email       String   @unique
+  email       String      @unique
   password    String
   phoneNumber String
-  createdAt   DateTime @default(now())
+  createdAt   DateTime    @default(now())
   Cart        Cart[]
   Order       Order[]
+  Complaint   Complaint[]
 }
 
 model Admin {
@@ -63,16 +64,28 @@ model Cart {
 }
 
 model Order {
-  id     String @id @default(uuid())
-  userId String
-  user   User   @relation(fields: [userId], references: [id])
-  items Json
-  totalPrice Int
-  status String @default("preparing")
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          String      @id @default(uuid())
+  orderNumber String?     @unique
+  userId      String
+  user        User        @relation(fields: [userId], references: [id])
+  items       Json
+  totalPrice  Int
+  status      String      @default("preparing")
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  Complaint   Complaint[]
 
   @@index([userId])
 }
 
-
+model Complaint {
+  id      String @id @default(uuid())
+  userId  String
+  user    User   @relation(fields: [userId], references: [id])
+  orderId String
+  order   Order  @relation(fields: [orderId], references: [id])
+  title String
+  description String
+  status String @default("OPEN")
+  category String
+}

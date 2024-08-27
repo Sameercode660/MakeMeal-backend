@@ -1,8 +1,13 @@
 import { PrismaClient } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
-import pusher from "@/utils/pusher";
+
+
 
 const prisma = new PrismaClient()
+
+function generateOrderNumber() {
+    return Math.floor(1000 + Math.random() * 9000).toString(); // Generates a 4-digit number
+  }  
 
 export async function POST(req: NextRequest) {
     try {
@@ -13,28 +18,28 @@ export async function POST(req: NextRequest) {
 
         console.log(userId, items, totalPrice)
 
+        let orderNumber = generateOrderNumber()
+
         const response = await prisma.order.create({
             data: {
                 userId,
                 items,
-                totalPrice
+                totalPrice,
+                orderNumber
             }
         })
+
+        const deleteResponse = await prisma.cart.deleteMany({
+            where:{
+                userId: userId
+            }
+        })
+
+        console.log(deleteResponse)
 
         if (!response) {
             return NextResponse.json({ statusCode: 404, message: 'Order is not created', status: false })
         }
-
-        pusher.trigger("oms-orders", "new-order", {
-            orderId: 123,
-            userId: 1234,
-            orderDetails: 'Order details'
-        });
-
-        pusher.trigger(`user-orders-123`, "order-confirmed", {
-            message: "Your order has been placed successfully.",
-            orderId: "id"
-        });
 
         return NextResponse.json({ statusCode: 200, response, status: true })
 
