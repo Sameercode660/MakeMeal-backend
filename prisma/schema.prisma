@@ -23,6 +23,7 @@ model User {
   Cart        Cart[]
   Order       Order[]
   Complaint   Complaint[]
+  Remark      Remark[]
 }
 
 model Admin {
@@ -74,18 +75,31 @@ model Order {
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
   Complaint   Complaint[]
+  Remark      Remark[]
 
   @@index([userId])
 }
 
 model Complaint {
-  id      String @id @default(uuid())
-  userId  String
-  user    User   @relation(fields: [userId], references: [id])
-  orderId String
-  order   Order  @relation(fields: [orderId], references: [id])
-  title String
+  id          String   @id @default(uuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  orderId     String
+  order       Order    @relation(fields: [orderId], references: [id])
+  title       String
   description String
-  status String @default("OPEN")
-  category String
+  status      String   @default("OPEN")
+  category    String
+  Remark      Remark[]
+}
+
+model Remark {
+  id          String    @id @default(uuid())
+  complaintId String
+  complaint   Complaint @relation(fields: [complaintId], references: [id])
+  orderId     String
+  order       Order     @relation(fields: [orderId], references: [id])
+  userId      String
+  user        User      @relation(fields: [userId], references: [id])
+  remark      String
 }
