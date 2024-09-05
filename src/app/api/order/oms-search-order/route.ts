@@ -17,7 +17,11 @@ export async function POST(req: NextRequest) {
             createdAt: {
                 gte: new Date(startDate),
                 lte: new Date(endDate)
-            }
+            },
+            status: 'close'
+        },
+        include: {
+          user: true,
         }
       })
 
@@ -45,6 +49,9 @@ export async function POST(req: NextRequest) {
           status: "close",
           orderNumber: orderNumber,
         },
+        include: {
+          user: true
+        }
       });
     } else {
       response = await prisma.order.findMany({
@@ -58,6 +65,9 @@ export async function POST(req: NextRequest) {
             phoneNumber: mobileNumber,
           },
         },
+        include: {
+          user: true
+        }
       });
     }
 

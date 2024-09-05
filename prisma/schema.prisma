@@ -49,6 +49,7 @@ model Product {
   discount        Int
   ingredient      String
   calories        String
+  availability    Boolean   @default(true)
   Cart            Cart[]
 }
 
