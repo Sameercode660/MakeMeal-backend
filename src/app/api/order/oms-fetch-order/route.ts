@@ -23,7 +23,6 @@ export async function POST(req: NextRequest) {
             }
         })
 
-        console.log(response)
 
         if(!response || response.length === 0) {
             return NextResponse.json({statusCode: 200, message: 'No any order is there', status: true})

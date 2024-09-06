@@ -12,8 +12,6 @@ export async function POST(req: NextRequest) {
     
     const {token} = body
 
-    console.log(token)
-
     const verificationOfToken: any = verifyToken(token)
 
     const {email} = verificationOfToken

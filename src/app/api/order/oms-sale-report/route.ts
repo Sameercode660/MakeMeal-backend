@@ -22,8 +22,6 @@ export async function POST(req: NextRequest) {
 
         const totalSale = response.reduce((accumulator: any, order: any) => (accumulator + order.totalPrice), 0)
 
-        console.log(totalSale)
-
         const data = {
             totalSale,
             totalOrder: response.length

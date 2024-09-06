@@ -35,7 +35,6 @@ export async function POST(req: NextRequest) {
             }
         })
 
-        console.log(deleteResponse)
 
         if (!response) {
             return NextResponse.json({ statusCode: 404, message: 'Order is not created', status: false })

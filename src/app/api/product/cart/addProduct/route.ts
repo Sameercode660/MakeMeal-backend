@@ -14,7 +14,6 @@ export async function POST(req: NextRequest) {
 
   const { userId, productId, quantity }: RequestArgumentTypes = body;
 
-  console.log(body);
   try {
     const existingProduct = await prisma.cart.findFirst({
       where: {

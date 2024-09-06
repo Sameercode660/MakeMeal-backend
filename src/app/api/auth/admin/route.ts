@@ -12,7 +12,6 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({statusCode: 400, message: 'Body is Empty', status: false})
     }
 
-    console.log(body)
     const response = await prisma.admin.findFirst({
         where: {
             email: body.email,
@@ -20,7 +19,6 @@ export async function POST(req: NextRequest) {
         }
     })
 
-    console.log(response)
 
     if(!response) {
         return NextResponse.json({statusCode: 400, message: 'Invalid Credential' , status: false})

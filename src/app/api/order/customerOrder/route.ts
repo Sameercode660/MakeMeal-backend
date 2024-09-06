@@ -16,7 +16,6 @@ export async function POST(req: NextRequest) {
             }
         })
 
-        console.log(response)
 
         return NextResponse.json({statusCode: 200, response, status: true})
     } catch (error) {

@@ -14,7 +14,6 @@ const prisma = new PrismaClient();
 export async function POST(req: NextRequest) {
 
   const body = await req.json();
-  console.log('entered')
 
   const { name, email, password, phoneNumber } = body;
 

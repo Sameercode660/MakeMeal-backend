@@ -9,7 +9,6 @@ export async function POST(req: NextRequest) {
         const body = await req.json()
 
         const { cartId } = body
-        console.log(cartId)
 
         if (!cartId) {
             return NextResponse.json({ statusCode: 400, message: 'Cart id is not provided', status: false })
